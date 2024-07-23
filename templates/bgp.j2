@@ -1,0 +1,30 @@
+ip bgp-community new-format
+
+router bgp {{host.bgp_local_as}}
+ bgp router-id {{host.bgp_rid}}
+ neighbor {{host.hub1_address}} remote-as {{host.hub1_remote_as}}
+ neighbor {{host.hub1_address}} description {{host.hub1_description}}
+ neighbor {{host.hub2_address}} remote-as {{host.hub2_remote_as}}
+ neighbor {{host.hub2_address}} description {{host.hub2_description}}
+
+{% if host.intranet_primary == "true" %}
+ neighbor {{host.hub1_address}} route-map primary-in in
+ neighbor {{host.hub1_address}} route-map primary-out out
+ neighbor {{host.hub2_address}} route-map backup1-in in
+ neighbor {{host.hub2_address}} route-map backup1-out out
+{% else %} 
+ neighbor {{host.hub1_address}} route-map backup2-in in
+ neighbor {{host.hub1_address}} route-map backup2-out out
+ neighbor {{host.hub2_address}} route-map backup3-in in
+ neighbor {{host.hub2_address}} route-map backup3-out out
+{% endif %}
+{% for peer in host.ibgp_peers %}
+ neighbor {{peer.address}} remote-as {{host.bgp_local_as}}
+ neighbor {{peer.address}} description {{peer.description}}
+ neighbor {{peer.address}} update-source {{peer.update_source}}
+ neighbor {{peer.address}} route-map ibgp-in in
+ neighbor {{peer.address}} route-map ibgp-out out
+{% endfor %}
+{% for network in host.bgp_networks %}
+ network {{network.address}} mask {{network.netmask}}
+{% endfor %}

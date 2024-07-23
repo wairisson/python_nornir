@@ -1,0 +1,78 @@
+#groups.yaml
+---
+cisco:
+  platform: IOS
+#  platform: cisco_ios
+
+global:
+  data:
+    # Default 
+    helper_addresses:
+      - 10.10.10.10
+      - 10.20.20.20
+
+    ############################################ Tunnel Interfaces - DMPVN ############################################
+    # Global Parameters -  Tunnel 110 
+    tu_110_key: "1000"   
+    tu_110_nhrp_auth: "PASSHUB1"
+    tu_110_nhrp_net_id: "100"
+
+    # Global Parameters -  Tunnel 210 
+    tu_210_key: "2000" 
+    tu_210_nhrp_auth: "PASSHUB2"
+    tu_210_nhrp_net_id: "200"
+
+latam:
+  groups:
+    - global
+  data:
+    # Region 1 DHCP Servers 
+    helper_addresses:
+      - 10.1.1.1
+      - 10.1.2.2
+
+    ################################ Regional Parameters - BGP
+
+    #Region 1 HUBs
+    hub1_address: "10.1.110.1"
+    hub1_remote_as: "65501"
+    hub1_description: "*** R1-HUB1 - PH DMVPN SPOKE TUNNEL ***"
+
+    hub2_address: "10.2.210.1"
+    hub2_remote_as: "65502"
+    hub2_description: "*** R1-HUB1 - PH DMVPN SPOKE TUNNEL ***"
+
+
+    ############################################ Tunnel Interfaces - ZS ############################################
+    # Regional Parameters -  Tunnel 10 
+    tu_10_destination: "200.1.10.10"
+
+    # Regional Parameters -  Tunnel 20 
+    tu_20_destination: "200.1.20.20"
+
+
+    ################################ Regional Parameters - DMVPN
+    # Regional Parameters -  Tunnel 110 
+    tu_110_nhs: "10.1.110.1"    # Region
+    tu_110_nbma: "200.1.0.110"  # Region
+
+
+    # Regional Parameters -  Tunnel 210 
+    tu_210_nhs: "10.2.210.1"    # Region
+    tu_210_nbma: "200.2.0.210"  # Region
+
+s1:
+  groups:
+    - latam
+  data:
+    subnet: '10.1.0.0/16'
+    ntp_server: "10.10.10.1"
+    snmp_community: "private1"
+
+s2:
+  groups:
+    - latam
+  data:
+    subnet: '10.2.0.0/16'
+    ntp_server: "10.10.10.2"
+    snmp_community: "private2"

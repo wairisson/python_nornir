@@ -1,0 +1,711 @@
+2024-07-21 19:26:36,912 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:26:36,936 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'template_file' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_jinja2/plugins/tasks/template_file.py", line 42, in template_file
+    t = env.get_template(template)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "templates/ios_edge.j2", line 258, in template
+    !subnet1 {{host.subnet | host('1') }}
+jinja2.exceptions.TemplateAssertionError: No filter named 'host'.
+
+2024-07-21 19:26:36,936 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'set_edge' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/push_config.py", line 30, in set_edge
+    rendered_config = task.run(task=template_file, template="ios_edge.j2", jinja_filters={"ip": ip_filter, "netmask": netmask_filter}, path="templates/").result
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: template_file (failed)
+
+
+2024-07-21 19:27:27,802 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:27:27,891 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'template_file' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_jinja2/plugins/tasks/template_file.py", line 43, in template_file
+    text = t.render(host=task.host, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "templates/ios_edge.j2", line 258, in top-level template code
+    !subnet1 {{host.subnet | host('1') }}
+  File "/root/Python_Course/nornir_project/custom_filters.py", line 28, in host_filter
+    return host_ips[h_number]
+TypeError: list indices must be integers or slices, not str
+
+2024-07-21 19:27:27,892 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'set_edge' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/push_config.py", line 30, in set_edge
+    rendered_config = task.run(task=template_file, template="ios_edge.j2", jinja_filters={"subnet": subnet_filter, "host": host_filter}, path="templates/").result
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: template_file (failed)
+
+
+2024-07-21 19:28:24,397 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:28:51,953 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:30:54,608 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:40:03,096 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:40:32,082 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:41:21,560 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:41:21,583 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'template_file' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_jinja2/plugins/tasks/template_file.py", line 42, in template_file
+    t = env.get_template(template)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/jinja2/environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "templates/ios_edge.j2", line 268, in template
+    ! ip address {{host.subnet | subnet_filter(30,2) host_filter(0) }} {{interface.sm}}
+jinja2.exceptions.TemplateSyntaxError: expected token 'end of print statement', got 'host_filter'
+
+2024-07-21 19:41:21,584 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'set_edge' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/push_config.py", line 30, in set_edge
+    rendered_config = task.run(task=template_file, template="ios_edge.j2", jinja_filters={"subnet_filter": subnet_filter, "host_filter": host_filter}, path="templates/").result
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: template_file (failed)
+
+
+2024-07-21 19:41:51,552 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:43:19,134 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:45:09,266 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-21 19:45:47,261 -  nornir.core -     INFO -        run() - Running task 'set_edge' with args {} on 1 hosts
+2024-07-23 17:21:24,858 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 2 hosts
+2024-07-23 17:21:27,936 - nornir.core.task -    ERROR -      start() - Host 'Csw01': task 'napalm_cli' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/paramiko/client.py", line 388, in connect
+    raise NoValidConnectionsError(errors)
+paramiko.ssh_exception.NoValidConnectionsError: [Errno None] Unable to connect to port 22 on 192.168.0.11
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/base/base.py", line 114, in _netmiko_open
+    self._netmiko_device = ConnectHandler(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.11:22
+
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_napalm/plugins/tasks/napalm_cli.py", line 19, in napalm_cli
+    device = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_napalm/plugins/connections/__init__.py", line 57, in open
+    connection.open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/ios/ios.py", line 173, in open
+    self.device = self._netmiko_open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/base/base.py", line 123, in _netmiko_open
+    raise ConnectionException("Cannot connect to {}".format(self.hostname))
+napalm.base.exceptions.ConnectionException: Cannot connect to 192.168.0.11
+
+2024-07-23 17:21:27,936 - nornir.core.task -    ERROR -      start() - Host 'Csw02': task 'napalm_cli' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/paramiko/client.py", line 388, in connect
+    raise NoValidConnectionsError(errors)
+paramiko.ssh_exception.NoValidConnectionsError: [Errno None] Unable to connect to port 22 on 192.168.0.15
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/base/base.py", line 114, in _netmiko_open
+    self._netmiko_device = ConnectHandler(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.15:22
+
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_napalm/plugins/tasks/napalm_cli.py", line 19, in napalm_cli
+    device = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_napalm/plugins/connections/__init__.py", line 57, in open
+    connection.open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/ios/ios.py", line 173, in open
+    self.device = self._netmiko_open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/napalm/base/base.py", line 123, in _netmiko_open
+    raise ConnectionException("Cannot connect to {}".format(self.hostname))
+napalm.base.exceptions.ConnectionException: Cannot connect to 192.168.0.15
+
+2024-07-23 17:21:27,936 - nornir.core.task -    ERROR -      start() - Host 'Csw01': task 'send_sh_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_sh_cmd
+    configure_devices = task.run(task=napalm_cli, commands =[cmd])
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: napalm_cli (failed)
+
+
+2024-07-23 17:21:27,937 - nornir.core.task -    ERROR -      start() - Host 'Csw02': task 'send_sh_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_sh_cmd
+    configure_devices = task.run(task=napalm_cli, commands =[cmd])
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: napalm_cli (failed)
+
+
+2024-07-23 17:22:02,154 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 2 hosts
+2024-07-23 17:23:23,780 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:24:19,263 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:24:38,746 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:24:51,650 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:29:43,330 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:30:07,734 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:30:13,673 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:33:41,508 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:33:41,510 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_sh_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_sh_cmd
+    print(nr.inventory.hosts['s1-wan-rt01'].items())
+NameError: name 'nr' is not defined
+
+2024-07-23 17:33:48,792 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:33:48,794 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_sh_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_sh_cmd
+    print(nr.inventory.hosts['s1-wan-rt01'].items())
+NameError: name 'nr' is not defined
+
+2024-07-23 17:34:35,094 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:34:51,164 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:40:51,131 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:41:05,726 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:46:44,817 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:46:44,818 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: netmiko_send_command() missing 1 required positional argument: 'command_string'
+
+2024-07-23 17:46:44,819 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_netmiko_cmd
+    configure_devices = task.run(task=netmiko_send_command, useTextFSM=True, commands =[cmd], )
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2024-07-23 17:49:39,404 -  nornir.core -     INFO -        run() - Running task 'send_sh_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:50:37,215 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 17:50:40,276 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/paramiko/client.py", line 388, in connect
+    raise NoValidConnectionsError(errors)
+paramiko.ssh_exception.NoValidConnectionsError: [Errno None] Unable to connect to port 22 on 192.168.0.10
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.10:22
+
+
+
+2024-07-23 17:50:40,277 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/send_commands.py", line 12, in send_netmiko_cmd
+    configure_devices = task.run(task=netmiko_send_command, command_string=cmd )
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2024-07-23 17:55:11,074 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {} on 1 hosts
+2024-07-23 17:55:11,075 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+TypeError: send_netmiko_cmd() missing 1 required positional argument: 'cmd'
+
+2024-07-23 17:55:23,764 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {} on 1 hosts
+2024-07-23 17:55:26,835 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/paramiko/client.py", line 388, in connect
+    raise NoValidConnectionsError(errors)
+paramiko.ssh_exception.NoValidConnectionsError: [Errno None] Unable to connect to port 22 on 192.168.0.10
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/base_connection.py", line 1068, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 192.168.0.10:22
+
+
+
+2024-07-23 17:55:26,835 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/sample_codes/send_commands copy.py", line 12, in send_netmiko_cmd
+    configure_devices = task.run(task=netmiko_send_command, command_string='show ver' )
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2024-07-23 17:57:04,000 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:00:02,994 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:00:03,724 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+TypeError: BaseConnection.send_command() got an unexpected keyword argument 'se_textfsm'
+
+2024-07-23 18:00:03,724 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/sample_codes/send_commands copy.py", line 12, in send_netmiko_cmd
+    configure_devices = task.run(task=netmiko_send_command,  command_string=cmd, se_textfsm=True )
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2024-07-23 18:00:12,031 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:01:26,163 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:01:48,591 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:02:05,784 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:02:38,948 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:02:38,952 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/netmiko/ssh_dispatcher.py", line 360, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+aruba_os
+aruba_osswitch
+aruba_procurve
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+coriant
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+dlink_ds
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+flexvnf
+fortinet
+generic
+generic_termserver
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_vrpv8
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+linux
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+sixwind_os
+sophos_sfos
+supermicro_smis
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2024-07-23 18:02:38,953 - nornir.core.task -    ERROR -      start() - Host 'Edge01': task 'send_netmiko_cmd' failed with traceback:
+Traceback (most recent call last):
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/Python_Course/nornir_project/sample_codes/send_commands copy.py", line 12, in send_netmiko_cmd
+    configure_devices = task.run(task=netmiko_send_command,  command_string=cmd, use_textfsm=True ).result
+  File "/root/Python_Course/venv_nornir/lib/python3.10/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2024-07-23 18:02:45,301 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:08:34,119 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:08:58,644 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:09:37,626 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'sh ip int br'} on 1 hosts
+2024-07-23 18:10:03,710 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:10:23,277 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf'} on 1 hosts
+2024-07-23 18:16:40,032 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:17:28,645 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:20:00,501 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:20:11,224 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:20:24,643 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:21:15,293 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:21:44,559 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:22:03,765 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:22:16,377 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:23:06,090 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:23:44,630 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:24:01,014 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:24:13,538 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:24:33,744 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:25:42,963 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:26:23,763 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:30:12,428 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:30:31,601 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:31:43,963 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:31:58,034 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:32:12,329 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:33:41,868 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip int br'} on 1 hosts
+2024-07-23 18:34:34,604 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:35:20,456 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ver'} on 1 hosts
+2024-07-23 18:35:37,951 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:35:59,470 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:36:09,052 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:36:49,832 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:43:57,465 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 18:45:35,486 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:19:00,378 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:20:00,675 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:21:30,626 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:21:57,000 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:22:12,290 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:22:28,534 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:23:22,697 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:23:29,016 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:26:02,656 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:26:26,523 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:26:43,184 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:26:51,540 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:26:59,660 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:27:25,778 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:28:54,639 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:29:42,009 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:29:56,038 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:30:26,909 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:31:06,158 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:31:19,421 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:32:43,296 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:32:58,868 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:33:30,639 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:33:39,526 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:33:47,261 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:34:11,485 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:34:37,066 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:35:06,636 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:35:36,097 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:35:54,301 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:36:03,040 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:36:22,363 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:36:36,823 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:36:59,529 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:37:10,691 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:37:20,225 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:37:35,186 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:37:56,741 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:38:22,859 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:38:31,809 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:38:48,518 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:38:56,136 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:39:02,724 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:39:10,305 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:39:29,695 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:39:41,221 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:52:14,468 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:52:23,070 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:52:35,503 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:52:47,019 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:53:41,651 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:54:09,840 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:54:37,366 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:55:07,581 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:55:26,973 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:55:40,325 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:55:55,619 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:56:28,594 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:57:17,907 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:57:35,295 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:57:51,594 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:58:29,784 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:58:51,853 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:59:15,063 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 19:59:49,080 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:00:08,898 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:00:23,211 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:00:45,880 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:00:52,389 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:01:28,074 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:01:56,102 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:04:42,890 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:05:26,963 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:05:41,853 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:06:01,730 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:06:41,082 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:06:54,702 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:08:24,740 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:09:06,664 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:09:14,392 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:09:31,877 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:11:22,665 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:11:40,303 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:12:21,823 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:12:40,595 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:12:58,503 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:13:15,038 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:13:37,594 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:13:50,533 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:19:09,642 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:19:37,699 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:19:47,651 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:01,211 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:10,443 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:18,892 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:24,769 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:37,141 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:20:50,118 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:21:14,165 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:21:40,767 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:21:53,099 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:24:51,476 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:25:55,553 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:26:27,994 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:26:38,501 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:28:17,960 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:28:28,444 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:29:43,324 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:30:51,460 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:31:03,568 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:31:43,758 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:34:54,930 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:35:07,040 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:35:51,043 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:36:46,948 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts
+2024-07-23 20:39:56,752 -  nornir.core -     INFO -        run() - Running task 'send_netmiko_cmd' with args {'cmd': 'show ip ospf nei'} on 1 hosts

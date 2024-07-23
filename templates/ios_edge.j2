@@ -1,0 +1,270 @@
+hostname {{host.host_name}}
+!
+vrf definition INTERNET-VRF
+ !
+ address-family ipv4
+ exit-address-family
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+
+!############################################ IPSec #############################################
+!#
+crypto ikev2 keyring SYNKR2
+ peer ANY
+  address 0.0.0.0 0.0.0.0
+  pre-shared-key Syn2DMVPN&@!
+!
+!
+!         
+crypto ikev2 profile SYNDMVPN-INET
+ match fvrf INTERNET-VRF
+ match identity remote address 0.0.0.0 
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local SYNKR2
+ dpd 20 5 on-demand
+!
+crypto ikev2 nat keepalive 30
+!
+!
+crypto ipsec security-association replay window-size 1024
+!
+!
+crypto ipsec transform-set DMVPN esp-aes esp-sha256-hmac 
+ mode transport
+!
+!
+crypto ipsec profile SYNPROF
+ set transform-set DMVPN 
+ set ikev2-profile SYNDMVPN-INET
+
+!############################################ Loopback Interfaces #############################################
+!#
+{% if host.loopback_interfaces is defined %}
+{% for interface in host.loopback_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+{% if interface.vrf is defined %}
+ vrf forwarding {{interface.vrf}}
+{% endif %}
+ ip address {{interface.ip}} {{interface.sm}}
+{% endfor %}
+{% endif %}
+
+!############################################ Routed Interfaces #############################################
+!#
+{% if host.routed_interfaces is defined %}
+{% for interface in host.routed_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+{% if interface.vrf is defined %}
+ vrf forwarding {{interface.vrf}}
+{% endif %}
+ ip address {{interface.ip}} {{interface.sm}}
+ no ip redirects
+ no ip proxy-arp
+ load-interval 30
+ !no cdp enable
+ no mop enabled
+ no lldp transmit
+ no lldp receive
+{% endfor %}
+{% endif %}
+
+!############################################ Tunnel Interfaces - PHS #############################################
+!#
+{% if host.tunnel_interfaces_phs is defined %}
+{% for interface in host.tunnel_interfaces_phs %}
+interface {{interface.name}}
+ description {{interface.description}}
+ ip address {{interface.ip}} {{interface.sm}}
+ no ip redirects
+ ip mtu 1400
+{% if interface.name == "Tunnel110" %}
+ tunnel key {{host.tu_110_key}}
+ ip nhrp authentication {{host.tu_110_nhrp_auth}}
+ ip nhrp network-id {{host.tu_110_nhrp_net_id}}
+{% else %}
+ tunnel key {{host.tu_210_key}}
+ ip nhrp authentication {{host.tu_210_nhrp_auth}}
+ ip nhrp network-id {{host.tu_210_nhrp_net_id}}
+{% endif %}
+ ip nhrp holdtime 360
+{% if interface.name == "Tunnel110" %}
+ ip nhrp nhs {{host.tu_110_nhs}} nbma {{host.tu_110_nbma}} multicast
+{% else %}
+ ip nhrp nhs {{host.tu_210_nhs}} nbma {{host.tu_210_nbma}} multicast
+{% endif %}
+ ip tcp adjust-mss 1360
+ load-interval 30
+ if-state nhrp
+ !qos pre-classify
+ tunnel source {{interface.tu_source}}
+ tunnel mode gre multipoint
+ tunnel vrf INTERNET-VRF
+ tunnel protection ipsec profile SYNPROF shared
+ !
+ !
+{% endfor %}
+{% endif %}
+
+
+!############################################ Tunnel Interfaces - Internet Proxy #############################################
+!#
+{% if host.tunnel_interfaces_zs is defined %}
+{% for interface in host.tunnel_interfaces_zs %}
+interface {{interface.name}}
+ description {{interface.description}}
+ ip address {{interface.ip}} {{interface.sm}}
+ ip mtu 1454
+ ip tcp adjust-mss 1300
+ load-interval 30
+ !qos pre-classify
+ keepalive 20 3
+ tunnel source {{interface.tu_source}}
+{% if interface.name == "Tunnel10" %}
+ tunnel destination {{host.tu_10_destination}}
+{% else %}
+ tunnel destination {{host.tu_20_destination}}
+{% endif %}
+ tunnel vrf INTERNET-VRF
+ !
+ !
+{% endfor %}
+{% endif %}
+
+!############################################ AS-PATH ACL  #############################################
+
+ip as-path access-list 1 permit ^$
+
+
+!############################################ Route-map #############################################
+
+route-map ibgp-in permit 10 
+ description allow all routes 
+
+route-map ibgp-out permit 10 
+ description allow all routes 
+
+route-map primary-in permit 10 
+ description allow all routes 
+ set local-preference 175
+
+route-map primary-out deny 5 
+ match ip address prefix-list default_route
+!
+route-map primary-out permit 10 
+ description set communities 
+ match as-path 1
+ set community 64555:175 64555:410 64555:411 {{host.bgp_local_as}}:{{host.edge_node}} additive
+
+route-map backup1-in permit 10 
+ description allow all routes 
+ set local-preference 150
+
+route-map backup1-out deny 5 
+ match ip address prefix-list default_route
+!
+route-map backup1-out permit 10 
+ description set communities 
+ match as-path 1
+ set community 64555:150 64555:410 64555:412 {{host.bgp_local_as}}:{{host.edge_node}} additive
+
+
+route-map backup2-in permit 10 
+ description allow all routes 
+ set local-preference 125
+
+route-map backup2-out deny 5 
+ match ip address prefix-list default_route
+!
+route-map backup2-out permit 10 
+ description set communities 
+ match as-path 1
+ set community 64555:125 64555:410 64555:411 {{host.bgp_local_as}}:{{host.edge_node}} additive
+
+
+route-map backup3-in permit 10 
+ description allow all routes 
+ set local-preference 100
+
+route-map backup3-out deny 5 
+ match ip address prefix-list default_route
+!
+route-map backup3-out permit 10 
+ description set communities 
+ match as-path 1
+ set community 64555:100 64555:410 64555:412 {{host.bgp_local_as}}:{{host.edge_node}} additive
+
+!############################################ Static Routes #############################################
+!#
+{% if host.static_routes is defined %}
+{% for route in host.static_routes %}
+
+{% if route.vrf is defined %}
+ip route vrf {{route.vrf}} {{route.ip}} {{route.sm}} {{route.gw}}
+{% else %} 
+ip route {{route.ip}} {{route.sm}} {{route.gw}} 
+{% endif %}
+
+{% if host.internet_primary == "true" %}
+ip route 0.0.0.0 0.0.0.0 Tunnel10 100
+ip route 0.0.0.0 0.0.0.0 Tunnel20 110
+{% else %} 
+ip route 0.0.0.0 0.0.0.0 Tunnel10 120
+ip route 0.0.0.0 0.0.0.0 Tunnel20 130
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+
+!############################################ OSPF #############################################
+{% if host.ospf_processes is defined %}
+{% for process in host.ospf_processes %}
+router ospf {{process.pid}}
+ router-id {{process.rid}}
+{% if host.intranet_primary == "true" %}
+ redistribute bgp {{host.bgp_local_as}} metric 100 metric-type 1
+{% else %} 
+ redistribute bgp {{host.bgp_local_as}} metric 200 metric-type 1
+{% endif %}
+{% if host.internet_primary == "true" %}
+ default-information originate metric 100 metric-type 1
+{% else %} 
+ default-information originate metric 200 metric-type 1
+{% endif %}
+ passive-interface default
+{% for interface in process.interfaces_enabled %}
+ no passive-interface {{interface.name}}
+{% endfor %}
+{% for network in process.networks %}
+ network {{network.address}} {{network.netmask}} area {{network.area}}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+!############################################ Render tests #############################################
+!#
+
+!subnet {{host.subnet}}
+
+!subnet1 {{host.subnet | host_filter(0) }}
+!subnet1 {{host.subnet | subnet_filter(30,2) }}
+
+!{% if host.routed_interfaces is defined %}
+!{% for interface in host.routed_interfaces %}
+!interface {{interface.name}}
+! description {{interface.description}}
+!{% if interface.vrf is defined %}
+! vrf forwarding {{interface.vrf}}
+!{% endif %}
+! ip address {{host.subnet | subnet_filter(30,2) | host_filter(0) }} {{host.subnet | subnet_filter(30,2) | net_filter  }}
+!{% endfor %}
+!{% endif %}

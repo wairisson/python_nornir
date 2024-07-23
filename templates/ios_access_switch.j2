@@ -1,0 +1,191 @@
+hostname {{host.host_name}}
+
+vtp mode off
+
+!############################################ VLANS #####################################################
+{% if host.vlans is defined %}
+{% for vlan in host.vlans %}
+vlan {{vlan.id}}
+ name {{vlan.name}}
+{% endfor %}
+{% endif %}
+
+
+
+!############################################ SVI Interfaces #############################################
+!#
+{% if host.svi_interfaces is defined %}
+{% for interface in host.svi_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+ ip address {{interface.ip}} {{interface.sm}}
+{% if interface.helper_enable is defined and interface.helper_enable == true %}
+{% for address in host.helper_addresses %}
+ ip helper-address {{address}}
+{% endfor %}
+{% endif %}
+{% if interface.hsrp_ip is defined %}
+ standby 1 ip {{interface.hsrp_ip}}
+ standby 1 timers 1 3
+ standby 1 priority {{interface.hsrp_prio}}
+ standby 1 preempt delay minimum 450
+{% endif %}
+ logging event subif-link-status
+ load-interval 30
+{% endfor %}
+{% endif %}
+
+!############################################ Static Routes #############################################
+!#                                            TEST PENDING
+{% if host.static_routes is defined %}
+{%- for route in host.static_routes %}
+ip route {{route.ip}} {{route.sm}} {{route.gw}}  
+{% endfor -%}
+{% endif %}
+
+!############################################ Loopback Interfaces #############################################
+!#
+{% if host.loopback_interfaces is defined %}
+{% for interface in host.loopback_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+{% if interface.vrf is defined %}
+ vrf forwarding {{interface.vrf}}
+{% endif %}
+ ip address {{interface.ip}} {{interface.sm}}
+{% endfor %}
+{% endif %}
+
+!############################################ Routed Interfaces #############################################
+!#
+{% if host.routed_interfaces is defined %}
+{% for interface in host.routed_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+ no switchport
+ ip address {{interface.ip}} {{interface.sm}}
+ logging event subif-link-status
+ load-interval 30
+{% endfor -%}
+{% endif %}
+
+!############################################ UPLINK Interfaces ##########################################
+!#
+{% if host.uplink_interfaces is defined %}
+{% for interface in host.uplink_interfaces %}
+interface {{interface.name}}
+  description {{interface.description}}
+  switchport trunk encapsulation dot1q
+ {% if interface.native_vid is defined %}
+ switchport trunk native vlan {{interface.native_vid}}
+ {% endif %}
+ switchport trunk allowed vlan {{interface.vlan_range}}
+ switchport mode trunk
+ logging event trunk-status
+ load-interval 30
+ {% if 'Port-channel' not in interface.name -%}
+ udld port aggressive
+ {% endif -%}
+ !storm-control broadcast level 10.00
+ !storm-control action trap
+ spanning-tree link-type point-to-point
+ spanning-tree guard loop
+ ip dhcp snooping trust
+{% endfor %}
+{% endif %}
+
+!############################################# Port Channel Interfaces #############################################
+!#
+{% if host.port_channel_interfaces is defined %}
+{% for interface in host.port_channel_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan {{interface.vlan_range}}
+ {% if interface.native_vid is defined %}
+ switchport trunk native vlan {{interface.native_vid}}
+ {% endif -%}
+ switchport mode trunk
+ logging event trunk-status
+ load-interval 30
+ !storm-control broadcast level 10.00
+ !storm-control action trap
+ spanning-tree link-type point-to-point
+ spanning-tree guard loop
+ ip dhcp snooping trust
+{% endfor %}
+{% endif %}
+
+{% if host.port_channel_interfaces is defined %}
+{% for interface in host.port_channel_interfaces %}
+ {% for int_member in interface.po_int_members %}
+
+interface {{int_member.name}}
+ description {{ int_member.description }}
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan {{interface.vlan_range}}
+ switchport mode trunk
+ channel-group {{interface.pono}} mode {{interface.po_mode}}
+ {% endfor %}
+{% endfor %}
+{% endif %}
+
+!############################################ UserData Interfaces #############################################
+!#
+{% if host.userdata_interfaces is defined %}
+{% for interface in host.userdata_interfaces %}
+interface {{interface.name}}
+ description {{host.userdata_int_desc}}
+ switchport mode access
+ switchport access vlan {{host.userdata_pvid}}
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 2
+ switchport port-security aging type inactivity
+ switchport port-security
+ load-interval 30
+! storm-control broadcast level 20.00
+! storm-control multicast level 20.00
+! storm-control action shutdown
+! storm-control action trap
+! spanning-tree portfast !! Default
+ spanning-tree bpduguard enable
+ ip dhcp snooping limit rate 10
+{% endfor %}
+{% endif %}
+
+!############################################ Servers Interfaces #############################################
+!#
+{% if host.server_interfaces is defined %}
+{% for interface in host.server_interfaces %}
+interface {{interface.name}}
+ description {{interface.description}}
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan {{interface.native_vid}}
+ switchport trunk allowed vlan {{interface.vlan_range}}
+ switchport mode trunk
+ logging event trunk-status
+ load-interval 30
+ udld port aggressive
+ !storm-control broadcast level 10.00
+ !storm-control action trap
+ spanning-tree link-type point-to-point
+ spanning-tree guard loop
+{% endfor %}
+{% endif %}
+
+!############################################ WAP Interfaces #############################################
+!#
+{% if host.wap_interfaces is defined %}
+{% for interface in host.wap_interfaces %}
+interface {{interface.name}}
+ description {{host.wap_int_desc}}
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan {{host.wap_mgmt_pvid}}
+ switchport trunk allowed vlan {{host.wap_vlan_range}}
+ switchport mode trunk
+ load-interval 30
+! spanning-tree portfast trunk
+ ip dhcp snooping limit rate 100
+{% endfor %}
+{% endif %}
